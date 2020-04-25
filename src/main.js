@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import DemoButton from './components/Button'
+import './assets/fonts/iconfont.css'
 
 Vue.config.productionTip = false
 

@@ -1,6 +1,9 @@
 <template>
-  <button class="demo-button" :class="`demo-button-${type}`">
-    <span><slot></slot></span>
+  <button class="demo-button" :class="[`demo-button-${type}`,{'is-plain':plain,'is-round':round,
+  'is-circle':circle,'is-disabled':disabled}]" :disabled="disabled" @click="handleClick">
+    <i v-if="icon" :class="`demo-icon-${icon}`"></i>
+    <!-- 如果没传入文本插槽，则不显示span内容 -->
+    <span v-if="$slots.default"><slot></slot></span>
   </button>
 </template>
 
@@ -11,6 +14,31 @@
       type:{
         type: String,
         default:"default"
+      },
+      plain:{
+        type: Boolean,
+        default:false
+      },
+      round:{
+        type: Boolean,
+        default:false
+      },
+      circle:{
+        type: Boolean,
+        default:false
+      },
+      icon:{
+        type: String,
+        default:''
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      }
+    },
+    methods: {
+      handleClick (e) {
+        this.$emit('click', e)
       }
     }
   }
@@ -47,6 +75,7 @@
       background-color: #ecf5ff;
     }
   }
+
   .demo-button-primary{
     color:#fff;
     background-color: #409eff;
@@ -101,5 +130,82 @@
       background-color: #f78989;
       color: #fff;
     }
+  }
+
+  .demo-button.is-plain{
+    &:hover,
+    &:focus{
+      background: #fff;
+      border-color: #489eff;
+      color: #409eff;
+    }
+  }
+  .demo-button-primary.is-plain{
+    color: #409eff;
+    background: #ecf5ff;
+    &:hover,
+    &:focus{
+      background: #409eff;
+      border-color: #409eff;
+      color: #fff;
+    }
+  }
+  .demo-button-success.is-plain{
+    color: #67c23a;
+    background: #c2e7b0;
+    &:hover,
+    &:focus{
+      background: #67c23a;
+      border-color: #67c23a;
+      color: #fff;
+    }
+  }
+  .demo-button-info.is-plain{
+    color: #909399;
+    background: #d3d4d6;
+    &:hover,
+    &:focus{
+      background: #909399;
+      border-color: #909399;
+      color: #fff;
+    }
+  }
+  .demo-button-warning.is-plain{
+    color: #e6a23c;
+    background: #f5dab1;
+    &:hover,
+    &:focus{
+      background: #e6a23c;
+      border-color: #e6a23c;
+      color: #fff;
+    }
+  }
+  .demo-button-danger.is-plain{
+    color: #f56c6c;
+    background: #fbc4c4;
+    &:hover,
+    &:focus{
+      background: #f56c6c;
+      border-color: #f56c6c;
+      color: #fff;
+    }
+  }
+
+  .demo-button.is-round{
+    border-radius: 20px;
+    padding: 12px 23px;
+  }
+
+  .demo-button.is-circle{
+    border-radius: 50%;
+    padding: 12px;
+  }
+
+  .demo-button.is-disabled{
+    cursor: no-drop;
+  }
+
+  .demo-button [class*=demo-icon-]+span{
+    margin-left: 5px;
   }
 </style>
